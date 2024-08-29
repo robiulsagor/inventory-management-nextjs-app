@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 *,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
 body,
-html {
-  width: 100%;
+#root {
   height: 100%;
+  width: 100%;
+  @apply text-sm bg-gray-500 text-gray-900;
 }
