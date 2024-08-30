@@ -1,12 +1,33 @@
-import { Bell, Menu, Settings, Sun } from "lucide-react";
+"use client";
+
+import { useAppDispatch, useAppSelector } from "@/redux";
+import { setIsDarkMode, setIsSidebarCollapsed } from "@/state";
+import { Bell, Menu, Moon, Settings, Sun } from "lucide-react";
 import Link from "next/link";
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
+  const isSidebarCollapsed = useAppSelector(
+    (state) => state.global.isSidebarCollapsed
+  );
+
+  const isDark = useAppSelector((state) => state.global.isDarkMode);
+
+  const toggleSidebar = () => {
+    dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
+  };
+
+  const toggleDarkMode = () => {
+    dispatch(setIsDarkMode(!isDark));
+  };
   return (
     <div className="flex justify-between items-center mb-7">
       {/* left */}
       <div className="flex items-center justify-between gap-5">
-        <button className="px-3 py-3 rounded-full bg-gray-100 hover:bg-blue-100">
+        <button
+          className="px-3 py-3 rounded-full bg-gray-100 hover:bg-blue-100"
+          onClick={toggleSidebar}
+        >
           <Menu className="w-4 h-4" />
         </button>
 
@@ -28,8 +49,12 @@ const Navbar = () => {
       <div className="flex gap-5 items-center">
         <div className="hidden md:flex items-center justify-between gap-5">
           <div>
-            <button>
-              <Sun className="text-gray-500" size={24} />
+            <button className="text-gray-500" onClick={toggleDarkMode}>
+              {isDark ? (
+                <Moon className="text-gray-500" size={24} />
+              ) : (
+                <Sun className="text-gray-500" size={24} />
+              )}
             </button>
           </div>
           <div className="relative">
